@@ -1,5 +1,5 @@
 import pygame
-from characters import NICOLE
+from avatars import NICOLE
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode(size=(WIDTH, HEIGHT))
@@ -7,11 +7,13 @@ pygame.display.set_caption("HEHEHEHEHEHEHEHEHEHEHEHEHEHEHE")
 
 WHITE = (255, 255, 255)
 
+
+
 FPS = 60
 
 def draw_window():
     WIN.fill(WHITE)
-    WIN.blit(NICOLE, )
+    WIN.blit(NICOLE, (0, 0))
     pygame.display.update()
 
 def main():
