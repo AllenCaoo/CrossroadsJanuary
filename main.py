@@ -4,7 +4,6 @@ from avatars import NICOLE
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode(size=(WIDTH, HEIGHT))
 pygame.display.set_caption("HEHEHEHEHEHEHEHEHEHEHEHEHEHEHE")
-BORDER = pygame.Rect(0, 0, WIDTH, HEIGHT)
 
 BLACK = (0, 0, 0)
 
@@ -14,17 +13,26 @@ avatar = None
 
 AVATAR_WIDTH, AVATAR_HEIGHT = 40, 40
 
+BORDER = pygame.Rect(WIDTH - AVATAR_WIDTH - 50, 0, 10, HEIGHT)
+
 VELOCITY = 5
+
+ENEMY_SPAWN = pygame.Rect(WIDTH - AVATAR_WIDTH, HEIGHT / 2 - AVATAR_HEIGHT / 2,
+                          AVATAR_WIDTH, AVATAR_HEIGHT)
+
 
 def draw_window(avatar_space):
     WIN.fill(BLACK)
+    pygame.draw.rect(WIN, (255, 255, 255), ENEMY_SPAWN)
+    pygame.draw.rect(WIN, (255, 255, 255), BORDER)
     WIN.blit(avatar, (avatar_space.x, avatar_space.y))
     pygame.display.update()
+
 
 def handle_avatar_movement(keys_pressed, avatar_space):
     if keys_pressed[pygame.K_LEFT] and avatar_space.x - VELOCITY > 0:  # left key
         avatar_space.x -= VELOCITY
-    if keys_pressed[pygame.K_RIGHT] and avatar_space.x + VELOCITY < WIDTH - AVATAR_WIDTH:  # right key
+    if keys_pressed[pygame.K_RIGHT] and avatar_space.x + VELOCITY < BORDER.x - AVATAR_WIDTH:  # right key
         avatar_space.x += VELOCITY
     if keys_pressed[pygame.K_UP] and avatar_space.y - VELOCITY > 0:  # up key
         avatar_space.y -= VELOCITY
