@@ -1,5 +1,5 @@
 import pygame
-from avatars import NICOLE
+from characters import NICOLE
 from Roles import *
 
 WIDTH, HEIGHT = 900, 500

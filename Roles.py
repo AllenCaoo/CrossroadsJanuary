@@ -2,7 +2,7 @@ import pygame
 
 from main import WIDTH, HEIGHT, AVATAR_WIDTH, AVATAR_HEIGHT, BORDER, enemies, ATTACK_CD
 
-from avatars import NICOLE, ALLEN
+from characters import NICOLE, ALLEN
 
 from random import *
 
