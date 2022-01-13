@@ -12,6 +12,8 @@ RED = (255, 0, 0)
 
 GREEN = (0, 255, 0)
 
+YELLOW = (255, 200, 0)
+
 FPS = 60
 
 avatar = None
@@ -27,7 +29,7 @@ VELOCITY = 5
 ENEMY_SPAWN = pygame.Rect(WIDTH - AVATAR_WIDTH, HEIGHT / 2 - AVATAR_HEIGHT / 2,
                           AVATAR_WIDTH, AVATAR_HEIGHT)
 
-SPAWN_CD = 500
+SPAWN_CD = 1000
 
 ATTACK_CD = 2000
 
@@ -41,6 +43,10 @@ def draw_window(av, enemies):
         pygame.draw.circle(WIN, GREEN,
                            (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
                            100, width=2)
+    elif av.can_almost_attack():
+        pygame.draw.circle(WIN, YELLOW,
+                           (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
+                           100, width=2)
     else:
         pygame.draw.circle(WIN, RED,
                            (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
@@ -50,18 +56,18 @@ def draw_window(av, enemies):
     pygame.display.update()
 
 
-def handle_avatar_movement(keys_pressed, av):
-    av.handle_movement(keys_pressed)
+def handle_avatar_action(keys_pressed, av):
+    av.handle_action(keys_pressed)
 
 
-def handle_enemy_movement(enemies):
+def handle_enemy_action(enemies, av):
     for e in enemies:
-        e.move()
+        e.action(av)
 
 
 def main():
     global avatar, enemies
-    avatar = Avatar(enemies)
+    avatar = Avatar(0, enemies)
     clock = pygame.time.Clock()
     run = True
     difficulty = 1
@@ -73,11 +79,11 @@ def main():
                 run = False
         now = pygame.time.get_ticks()
         if now - last >= SPAWN_CD:
-            enemies.append(Enemy(3))
+            enemies.append(Enemy(0, 3))
             last = now
         keys_pressed = pygame.key.get_pressed()
-        handle_avatar_movement(keys_pressed, avatar)
-        handle_enemy_movement(enemies)
+        handle_avatar_action(keys_pressed, avatar)
+        handle_enemy_action(enemies, avatar)
         draw_window(avatar, enemies)
     pygame.quit()
 
