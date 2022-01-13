@@ -25,6 +25,8 @@ ENEMY_SPAWN = pygame.Rect(WIDTH - AVATAR_WIDTH, HEIGHT / 2 - AVATAR_HEIGHT / 2,
 
 SPAWN_CD = 500
 
+ATTACK_CD = 2000
+
 
 def draw_window(av, enemies):
     WIN.fill(BLACK)
@@ -47,7 +49,7 @@ def handle_enemy_movement(enemies):
 
 def main():
     global avatar, enemies
-    avatar = Avatar()
+    avatar = Avatar(enemies)
     clock = pygame.time.Clock()
     run = True
     difficulty = 1
