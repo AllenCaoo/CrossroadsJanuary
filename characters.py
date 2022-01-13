@@ -19,7 +19,7 @@ ELAINE_INJURED = pygame.image.load(os.path.join('src', 'injured/elaine.jpg'))
 
 characters = [NICOLE, PARK, ZOE, ELAINE, ALLEN, MANDREW, KAITLYN, KWANG, OLIVER]
 
-characters_injured = [NICOLE_INJURED]
+characters_injured = [NICOLE_INJURED, PARK_INJURED, ZOE_INJURED, ELAINE_INJURED]
 
 
 def get_rand_img_not(id):

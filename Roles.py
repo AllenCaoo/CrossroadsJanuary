@@ -60,7 +60,7 @@ class Avatar:
         self.health = 2
         self.width = AVATAR_WIDTH
         self.height = AVATAR_HEIGHT
-        self.avatar = pygame.transform.scale(NICOLE, (40, 40))
+        self.avatar = pygame.transform.scale(characters[id], (40, 40))
         self.space = pygame.Rect(100, 250, self.width, self.height)
         self.attack_cd = ATTACK_CD
         self.last_attacked = -self.attack_cd

@@ -94,12 +94,20 @@ def menu():
 
         if nicole_space.collidepoint(pygame.mouse.get_pos()):
             pygame.draw.rect(WIN, GREEN, nicole_space, 1)
+            if pygame.mouse.get_pressed()[0]:
+                return 0
         if park_space.collidepoint(pygame.mouse.get_pos()):
             pygame.draw.rect(WIN, GREEN, park_space, 1)
+            if pygame.mouse.get_pressed()[0]:
+                return 1
         if zoe_space.collidepoint(pygame.mouse.get_pos()):
             pygame.draw.rect(WIN, GREEN, zoe_space, 1)
+            if pygame.mouse.get_pressed()[0]:
+                return 2
         if elaine_space.collidepoint(pygame.mouse.get_pos()):
             pygame.draw.rect(WIN, GREEN, elaine_space, 1)
+            if pygame.mouse.get_pressed()[0]:
+                return 3
 
         pygame.display.update()
 
@@ -137,8 +145,8 @@ def handle_enemy_action(enemies, av):
 
 def main():
     global avatar, enemies
-    menu()
-    avatar = Avatar(0, enemies)
+    avatar_id = menu()
+    avatar = Avatar(avatar_id, enemies)
     clock = pygame.time.Clock()
     run = True
     difficulty = 1
@@ -150,7 +158,7 @@ def main():
                 run = False
         now = pygame.time.get_ticks()
         if now - last >= SPAWN_CD:
-            enemies.append(Enemy(0, 3))
+            enemies.append(Enemy(avatar_id, 3))
             last = now
         keys_pressed = pygame.key.get_pressed()
         handle_avatar_action(keys_pressed, avatar)
