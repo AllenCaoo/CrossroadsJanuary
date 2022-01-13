@@ -50,7 +50,8 @@ class Enemy:
         return False
 
     def in_range(self, av):
-        return abs(av.space.x - self.space.centerx) < 40 and abs(av.space.y - self.space.centery) < 40
+        return abs(av.space.centerx - self.space.centerx) < 30 \
+               and abs(av.space.centery - self.space.centery) < 30
 
 
 class Avatar:
