@@ -112,10 +112,16 @@ def menu():
         pygame.display.update()
 
 
-def draw_window(av, enemies):
+def draw_window(av, enemies, score):
     WIN.fill(BLACK)
     pygame.draw.rect(WIN, (255, 255, 255), ENEMY_SPAWN)
     pygame.draw.rect(WIN, (255, 255, 255), BORDER)
+
+    font = pygame.font.SysFont('Helvetica', 30)
+    score_text = font.render('Score: ' + str(score), False, (255, 255, 255))
+    score_rect = score_text.get_rect(topleft=(0, 0))
+    WIN.blit(score_text, score_rect)
+
     WIN.blit(av.avatar, (av.space.x, av.space.y))
     if av.can_attack():
         pygame.draw.circle(WIN, GREEN,
@@ -135,7 +141,7 @@ def draw_window(av, enemies):
 
 
 def handle_avatar_action(keys_pressed, av):
-    av.handle_action(keys_pressed)
+    return av.handle_action(keys_pressed)
 
 
 def handle_enemy_action(enemies, av):
@@ -151,6 +157,7 @@ def main():
     run = True
     difficulty = 1
     last = pygame.time.get_ticks()
+    score = 0
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -161,9 +168,9 @@ def main():
             enemies.append(Enemy(avatar_id, 3))
             last = now
         keys_pressed = pygame.key.get_pressed()
-        handle_avatar_action(keys_pressed, avatar)
+        score += handle_avatar_action(keys_pressed, avatar)
         handle_enemy_action(enemies, avatar)
-        draw_window(avatar, enemies)
+        draw_window(avatar, enemies, score)
     pygame.quit()
 
 

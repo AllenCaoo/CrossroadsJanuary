@@ -77,7 +77,8 @@ class Avatar:
         if keys_pressed[pygame.K_s] and self.space.y + self.velocity < HEIGHT - AVATAR_HEIGHT:  # go down
             self.space.y += self.velocity
         if keys_pressed[pygame.K_SPACE]:
-            self.attack()
+            return self.attack()
+        return 0
 
     def attack(self):
         now = pygame.time.get_ticks()
@@ -89,6 +90,8 @@ class Avatar:
                     dead.append(i)
             for i in range(len(dead)):
                 self.enemies.pop(dead[i] - i)
+            return len(dead)
+        return 0
 
     def in_range(self, enemy):
         return abs(enemy.space.x - self.space.x) < 100 and abs(enemy.space.y - self.space.y) < 100
