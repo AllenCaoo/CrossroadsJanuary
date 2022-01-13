@@ -8,6 +8,10 @@ pygame.display.set_caption("HEHEHEHEHEHEHEHEHEHEHEHEHEHEHE")
 
 BLACK = (0, 0, 0)
 
+RED = (255, 0, 0)
+
+GREEN = (0, 255, 0)
+
 FPS = 60
 
 avatar = None
@@ -33,6 +37,14 @@ def draw_window(av, enemies):
     pygame.draw.rect(WIN, (255, 255, 255), ENEMY_SPAWN)
     pygame.draw.rect(WIN, (255, 255, 255), BORDER)
     WIN.blit(av.avatar, (av.space.x, av.space.y))
+    if av.can_attack():
+        pygame.draw.circle(WIN, GREEN,
+                           (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
+                           100, width=2)
+    else:
+        pygame.draw.circle(WIN, RED,
+                           (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
+                           100, width=2)
     for e in enemies:
         WIN.blit(e.avatar, (e.space.x, e.space.y))
     pygame.display.update()

@@ -10,6 +10,7 @@ from random import *
 class Enemy:
     def __init__(self, difficulty):
         self.velocity = difficulty
+        self.health = 2
         self.space = pygame.Rect(WIDTH - AVATAR_WIDTH, HEIGHT / 2 - AVATAR_HEIGHT / 2,
                                  AVATAR_WIDTH, AVATAR_HEIGHT)
         self.avatar = pygame.transform.scale(ALLEN, (40, 40))
@@ -68,3 +69,8 @@ class Avatar:
             for i in range(len(dead)):
                 self.enemies.pop(dead[i] - i)
 
+    def can_attack(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_attacked >= self.attack_cd:
+            return True
+        return False
