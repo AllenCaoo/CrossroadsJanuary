@@ -110,6 +110,9 @@ class Avatar:
 
     def injured(self):
         self.health -= 1
-        if self.health == 0:
-            pygame.quit()  # Need better way to end the game
+        # if self.health == 0:
+        #     pygame.quit()  # Need better way to end the game
         self.avatar = pygame.transform.scale(characters_injured[self.id], (40, 40))
+
+    def is_dead(self):
+        return self.health <= 0
