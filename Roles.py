@@ -1,7 +1,9 @@
+import math
+
 import pygame
 
 from characters import *
-from main import WIDTH, HEIGHT, AVATAR_WIDTH, AVATAR_HEIGHT, BORDER, enemies, ATTACK_CD
+from main import WIDTH, HEIGHT, AVATAR_WIDTH, AVATAR_HEIGHT, BORDER, enemies, ATTACK_CD, GREEN, YELLOW, RED
 
 from characters import NICOLE
 
@@ -17,7 +19,7 @@ class Enemy:
         self.avatar = pygame.transform.scale(get_rand_img_not(av_id), (40, 40))
         self.velocity = difficulty
         self.xMove = randint(-3, -1)
-        self.yMove = randint(-3, 3)
+        self.yMove = choice([i for i in range(-3, 4) if i not in [0]])
         self.crossed_border = False
         self.attack_cd = ATTACK_CD
         self.last_attacked = -self.attack_cd
@@ -65,6 +67,7 @@ class Avatar:
         self.attack_cd = ATTACK_CD
         self.last_attacked = -self.attack_cd
         self.velocity = 5
+        self.range = 100
         self.enemies = enemies_lst
 
     def handle_action(self, keys_pressed):
@@ -94,7 +97,22 @@ class Avatar:
         return 0
 
     def in_range(self, enemy):
-        return abs(enemy.space.x - self.space.x) < 100 and abs(enemy.space.y - self.space.y) < 100
+        return math.sqrt(abs(enemy.space.x - self.space.x) ** 2 +
+                         abs(enemy.space.y - self.space.y) ** 2) < self.range
+
+    def draw_range(self, screen):
+        if self.can_attack():
+            pygame.draw.circle(screen, GREEN,
+                               (self.space.x + AVATAR_WIDTH / 2, self.space.y + AVATAR_HEIGHT / 2),
+                               self.range, width=2)
+        elif self.can_almost_attack():
+            pygame.draw.circle(screen, YELLOW,
+                               (self.space.x + AVATAR_WIDTH / 2, self.space.y + AVATAR_HEIGHT / 2),
+                               self.range, width=2)
+        else:
+            pygame.draw.circle(screen, RED,
+                               (self.space.x + AVATAR_WIDTH / 2, self.space.y + AVATAR_HEIGHT / 2),
+                               self.range, width=2)
 
     def can_attack(self):
         now = pygame.time.get_ticks()
@@ -116,3 +134,36 @@ class Avatar:
 
     def is_dead(self):
         return self.health <= 0
+
+
+class Speedrunner(Avatar):
+    def __init__(self, id, enemies_lst):
+        Avatar.__init__(self, id, enemies_lst)
+        self.velocity = 10
+
+
+class Sniper(Avatar):
+    def __init__(self, id, enemies_lst):
+        Avatar.__init__(self, id, enemies_lst)
+        self.range = 130
+
+
+class Tank(Avatar):
+    def __init__(self, id, enemies_lst):
+        Avatar.__init__(self, id, enemies_lst)
+        self.health = 4
+
+    def injured(self):
+        self.health -= 1
+        if self.health == 3:
+            self.avatar = pygame.transform.scale(zoe_injured[self.health], (40, 40))
+        if self.health == 2:
+            self.avatar = pygame.transform.scale(zoe_injured[self.health], (40, 40))
+        if self.health == 1:
+            self.avatar = pygame.transform.scale(zoe_injured[self.health], (40, 40))
+
+
+class Gunner(Avatar):
+    def __init__(self, id, enemies_lst):
+        Avatar.__init__(self, id, enemies_lst)
+        self.attack_cd = self.attack_cd // 2

@@ -154,23 +154,18 @@ def draw_window(av, enemies, score):
     pygame.draw.rect(WIN, WHITE, BORDER)
 
     font = pygame.font.SysFont('Helvetica', 30)
+
     score_text = font.render('Score: ' + str(score), False, WHITE)
-    score_rect = score_text.get_rect(topleft=(0, 0))
+    score_rect = score_text.get_rect(topleft=(5, 0))
     WIN.blit(score_text, score_rect)
 
+    hp_text = font.render('HP: ' + str(av.health), False, WHITE)
+    hp_rect = score_text.get_rect(topleft=(BORDER.x + BORDER.width + 5, 0))
+    WIN.blit(hp_text, hp_rect)
+
     WIN.blit(av.avatar, (av.space.x, av.space.y))
-    if av.can_attack():
-        pygame.draw.circle(WIN, GREEN,
-                           (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
-                           100, width=2)
-    elif av.can_almost_attack():
-        pygame.draw.circle(WIN, YELLOW,
-                           (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
-                           100, width=2)
-    else:
-        pygame.draw.circle(WIN, RED,
-                           (av.space.x + AVATAR_WIDTH / 2, av.space.y + AVATAR_HEIGHT / 2),
-                           100, width=2)
+    av.draw_range(WIN)
+
     for e in enemies:
         WIN.blit(e.avatar, (e.space.x, e.space.y))
     pygame.display.update()
@@ -189,7 +184,14 @@ def main():
     global avatar, enemies
     enemies.clear()
     avatar_id = menu()
-    avatar = Avatar(avatar_id, enemies)
+    if avatar_id == 0:
+        avatar = Speedrunner(avatar_id, enemies)
+    if avatar_id == 1:
+        avatar = Sniper(avatar_id, enemies)  # Perceptive
+    if avatar_id == 2:
+        avatar = Tank(avatar_id, enemies)
+    if avatar_id == 3:
+        avatar = Gunner(avatar_id, enemies)
     clock = pygame.time.Clock()
     run = True
     difficulty = 1

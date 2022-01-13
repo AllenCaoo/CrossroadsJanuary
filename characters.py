@@ -14,12 +14,16 @@ ELAINE = pygame.image.load(os.path.join('src', 'imgs/elaine.jpg'))
 
 NICOLE_INJURED = pygame.image.load(os.path.join('src', 'injured/nicole.jpg'))
 PARK_INJURED = pygame.image.load(os.path.join('src', 'injured/park.jpg'))
-ZOE_INJURED = pygame.image.load(os.path.join('src', 'injured/zoe.jpg'))
+ZOE_INJURED_3 = pygame.image.load(os.path.join('src', 'injured/zoe_3.jpg'))
+ZOE_INJURED_2 = pygame.image.load(os.path.join('src', 'injured/zoe_2.jpg'))
+ZOE_INJURED_1 = pygame.image.load(os.path.join('src', 'injured/zoe_1.jpg'))
 ELAINE_INJURED = pygame.image.load(os.path.join('src', 'injured/elaine.jpg'))
 
 characters = [NICOLE, PARK, ZOE, ELAINE, ALLEN, MANDREW, KAITLYN, KWANG, OLIVER]
 
-characters_injured = [NICOLE_INJURED, PARK_INJURED, ZOE_INJURED, ELAINE_INJURED]
+characters_injured = [NICOLE_INJURED, PARK_INJURED, ZOE_INJURED_1, ELAINE_INJURED]
+
+zoe_injured = [None, ZOE_INJURED_1, ZOE_INJURED_2, ZOE_INJURED_3]
 
 
 def get_rand_img_not(id):
