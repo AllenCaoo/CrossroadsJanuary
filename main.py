@@ -1,3 +1,5 @@
+import sys
+
 from Roles import *
 
 WIDTH, HEIGHT = 900, 500
@@ -58,7 +60,7 @@ def menu():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                sys.exit(0)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
 
@@ -226,7 +228,7 @@ def tutorial():
         clicked = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                sys.exit(0)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
         text_1 = font.render('The rules are simple.', False, RED)
@@ -308,7 +310,7 @@ def end(score):
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                sys.exit(0)
 
         score_text = font.render('you dead! your score: ' + str(score),
                                  False, WHITE)
@@ -331,7 +333,7 @@ def end(score):
             quit_text = font.render('quit',
                                     False, RED)
             if pygame.mouse.get_pressed()[0]:
-                pygame.quit()
+                sys.exit(0)
         WIN.blit(score_text, score_text_rect)
         WIN.blit(play_text, play_text_rect)
         WIN.blit(quit_text, quit_text_rect)
@@ -392,7 +394,7 @@ def main():
             run = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                sys.exit(0)
         now = pygame.time.get_ticks()
         if now - last >= SPAWN_CD:
             enemies.append(Enemy(avatar_id, 3))
