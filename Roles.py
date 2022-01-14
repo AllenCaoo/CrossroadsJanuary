@@ -71,13 +71,17 @@ class Avatar:
         self.enemies = enemies_lst
 
     def handle_action(self, keys_pressed):
-        if keys_pressed[pygame.K_a] and self.space.x - self.velocity > 0:  # go left
+        if (keys_pressed[pygame.K_a] or keys_pressed[pygame.K_LEFT]) \
+                and self.space.x - self.velocity > 0:  # go left
             self.space.x -= self.velocity
-        if keys_pressed[pygame.K_d] and self.space.x + self.velocity < BORDER.x - AVATAR_WIDTH:  # go right
+        if (keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]) \
+                and self.space.x + self.velocity < BORDER.x - AVATAR_WIDTH:  # go right
             self.space.x += self.velocity
-        if keys_pressed[pygame.K_w] and self.space.y - self.velocity > 0:  # go up
+        if (keys_pressed[pygame.K_w] or keys_pressed[pygame.K_UP]) \
+                and self.space.y - self.velocity > 0:  # go up
             self.space.y -= self.velocity
-        if keys_pressed[pygame.K_s] and self.space.y + self.velocity < HEIGHT - AVATAR_HEIGHT:  # go down
+        if (keys_pressed[pygame.K_s] or keys_pressed[pygame.K_DOWN]) \
+                and self.space.y + self.velocity < HEIGHT - AVATAR_HEIGHT:  # go down
             self.space.y += self.velocity
         if keys_pressed[pygame.K_SPACE]:
             return self.attack()

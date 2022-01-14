@@ -2,7 +2,7 @@ from Roles import *
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode(size=(WIDTH, HEIGHT))
-pygame.display.set_caption("HEHEHEHEHEHEHEHEHEHEHEHEHEHEHE")
+pygame.display.set_caption("If you're ready this, happy birthday!")
 
 BLACK = (0, 0, 0)
 
@@ -10,9 +10,17 @@ RED = (255, 0, 0)
 
 GREEN = (0, 255, 0)
 
+DARK_GREEN = (0, 120, 0)
+
 YELLOW = (255, 200, 0)
 
 WHITE = (255, 255, 255)
+
+TURQUOISE = (0, 120, 120)
+
+PINK = (255, 192, 203)
+
+WEIRD_COLOR = (120, 93, 23)
 
 FPS = 60
 
@@ -36,41 +44,59 @@ ATTACK_CD = 2000
 
 def menu():
     pygame.font.init()
-    font = pygame.font.SysFont('Comic Sans MS', 30)
     run = True
     menu_avatar_width = 70
     menu_avatar_height = 70
     clock = pygame.time.Clock()
     while run:
-        WIN.fill(BLACK)
         clock.tick(FPS)
+        WIN.fill(BLACK)
+        font = pygame.font.SysFont('Comic Sans MS', 40)
+
+        welcome_text = font.render('©Crossroads January Resistance', False, (0, 255, 255))
+        welcome_rect = welcome_text.get_rect(center=(WIDTH / 2, HEIGHT / 2 - 100))
+
+        font = pygame.font.SysFont('Comic Sans MS', 20)
+
+        choice_text = font.render('Choose your fighter!', False, WHITE)
+        choice_rect = choice_text.get_rect(center=(welcome_rect.centerx, welcome_rect.centery + 100))
+
+        tutorial_text = font.render('CLICK HERE FOR RULES', False, WHITE)
+        tutorial_rect = choice_text.get_rect(topright=(WIDTH - 50, 0))
+
+        WIN.blit(welcome_text, welcome_rect)
+        WIN.blit(choice_text, choice_rect)
+        WIN.blit(tutorial_text, tutorial_rect)
+
+        font = pygame.font.SysFont('Comic Sans MS', 40)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
         nicole = pygame.transform.scale(NICOLE, (70, 70))
-        nicole_space = pygame.Rect(WIDTH / 5, 2 * HEIGHT / 3,
+        nicole_space = pygame.Rect(WIDTH / 5 - AVATAR_WIDTH / 2, 2 * HEIGHT / 3,
                                    menu_avatar_width, menu_avatar_height)
         nicole_text = font.render('Nicole', False, WHITE)
         nicole_text_rect = nicole_text.get_rect(
             center=(nicole_space.centerx, nicole_space.centery - 60))
 
         park = pygame.transform.scale(PARK, (70, 70))
-        park_space = pygame.Rect(2 * WIDTH / 5, 2 * HEIGHT / 3,
+        park_space = pygame.Rect(2 * WIDTH / 5 - AVATAR_WIDTH / 2, 2 * HEIGHT / 3,
                                  menu_avatar_width, menu_avatar_height)
         park_text = font.render('Park', False, WHITE)
         park_text_rect = park_text.get_rect(
             center=(park_space.centerx, park_space.centery - 60))
 
         zoe = pygame.transform.scale(ZOE, (70, 70))
-        zoe_space = pygame.Rect(3 * WIDTH / 5, 2 * HEIGHT / 3,
+        zoe_space = pygame.Rect(3 * WIDTH / 5 - AVATAR_WIDTH / 2, 2 * HEIGHT / 3,
                                 menu_avatar_width, menu_avatar_height)
         zoe_text = font.render('Zoe', False, WHITE)
         zoe_text_rect = zoe_text.get_rect(
             center=(zoe_space.centerx, zoe_space.centery - 60))
 
         elaine = pygame.transform.scale(ELAINE, (70, 70))
-        elaine_space = pygame.Rect(4 * WIDTH / 5, 2 * HEIGHT / 3,
+        elaine_space = pygame.Rect(4 * WIDTH / 5 - AVATAR_WIDTH / 2, 2 * HEIGHT / 3,
                                    menu_avatar_width, menu_avatar_height)
         elaine_text = font.render('Elaine', False, WHITE)
         elaine_text_rect = elaine_text.get_rect(
@@ -81,33 +107,41 @@ def menu():
         WIN.blit(zoe, (zoe_space.x, zoe_space.y))
         WIN.blit(elaine, (elaine_space.x, elaine_space.y))
 
-        welcome_text = font.render('Welcome to Crossroads January!', False, WHITE)
-        welcome_rect = welcome_text.get_rect(center=(WIDTH / 2, HEIGHT / 2 - 100))
+        if nicole_space.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(WIN, WEIRD_COLOR, nicole_space, 1)
+            nicole_text = font.render('Nicole', False, WEIRD_COLOR)
+            if pygame.mouse.get_pressed()[0]:
+                return 0
+        if park_space.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(WIN, PINK, park_space, 1)
+            park_text = font.render('Park', False, PINK)
+            if pygame.mouse.get_pressed()[0]:
+                return 1
+        if zoe_space.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(WIN, TURQUOISE, zoe_space, 1)
+            zoe_text = font.render('Zoe', False, TURQUOISE)
+            if pygame.mouse.get_pressed()[0]:
+                return 2
+        if elaine_space.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(WIN, DARK_GREEN, elaine_space, 1)
+            elaine_text = font.render('Elaine', False, DARK_GREEN)
+            if pygame.mouse.get_pressed()[0]:
+                return 3
 
-        WIN.blit(welcome_text, welcome_rect)
         WIN.blit(nicole_text, nicole_text_rect)
         WIN.blit(park_text, park_text_rect)
         WIN.blit(zoe_text, zoe_text_rect)
         WIN.blit(elaine_text, elaine_text_rect)
 
-        if nicole_space.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(WIN, GREEN, nicole_space, 1)
-            if pygame.mouse.get_pressed()[0]:
-                return 0
-        if park_space.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(WIN, GREEN, park_space, 1)
-            if pygame.mouse.get_pressed()[0]:
-                return 1
-        if zoe_space.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(WIN, GREEN, zoe_space, 1)
-            if pygame.mouse.get_pressed()[0]:
-                return 2
-        if elaine_space.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(WIN, GREEN, elaine_space, 1)
-            if pygame.mouse.get_pressed()[0]:
-                return 3
-
         pygame.display.update()
+
+
+def tutorial():
+    run = True
+    clock = pygame.time.Clock()
+    while run:
+        clock.tick(FPS)
+        WIN.fill(BLACK)
 
 
 def end(score):
@@ -120,7 +154,7 @@ def end(score):
             if event.type == pygame.QUIT:
                 pygame.quit()
 
-        score_text = font.render('you died! your score: ' + str(score),
+        score_text = font.render('you dead! your score: ' + str(score),
                                  False, WHITE)
         score_text_rect = score_text.get_rect(center=(WIDTH / 2, HEIGHT / 3))
 
