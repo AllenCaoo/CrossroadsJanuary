@@ -19,7 +19,7 @@ class Enemy:
         self.avatar = pygame.transform.scale(get_rand_img_not(av_id), (40, 40))
         self.velocity = difficulty
         self.xMove = randint(-3, -1)
-        self.yMove = choice([i for i in range(-3, 4) if i not in [0]])
+        self.yMove = choice([i for i in range(-3, 3) if i not in [0]])
         self.crossed_border = False
         self.attack_cd = ATTACK_CD
         self.last_attacked = -self.attack_cd
@@ -52,6 +52,9 @@ class Enemy:
         return False
 
     def in_range(self, av):
+        if isinstance(av, Speedrunner):
+            return abs(av.space.centerx - self.space.centerx) < 15 \
+                   and abs(av.space.centery - self.space.centery) < 15
         return abs(av.space.centerx - self.space.centerx) < 30 \
                and abs(av.space.centery - self.space.centery) < 30
 
@@ -97,7 +100,7 @@ class Avatar:
                     dead.append(i)
             for i in range(len(dead)):
                 self.enemies.pop(dead[i] - i)
-            return len(dead)
+            return 3 * len(dead)
         return 0
 
     def in_range(self, enemy):
