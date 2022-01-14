@@ -4,7 +4,7 @@ from Roles import *
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode(size=(WIDTH, HEIGHT))
-pygame.display.set_caption("If you're ready this, happy birthday!")
+pygame.display.set_caption("If you're reading this, happy birthday!")
 
 BLACK = (0, 0, 0)
 
