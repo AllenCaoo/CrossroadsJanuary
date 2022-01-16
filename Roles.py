@@ -1,19 +1,14 @@
 import math
-
-import pygame
-
 from characters import *
-from main import WIDTH, HEIGHT, AVATAR_WIDTH, AVATAR_HEIGHT, BORDER, enemies, ATTACK_CD, GREEN, YELLOW, RED
-
-from characters import NICOLE
-
+from main import WIDTH, HEIGHT, AVATAR_WIDTH, AVATAR_HEIGHT, BORDER, ATTACK_CD, GREEN, YELLOW, RED
 from random import *
+
+PTS_PER_KILL = 5
 
 
 class Enemy:
     def __init__(self, av_id, difficulty):
         self.velocity = difficulty
-        # self.health = 2
         self.space = pygame.Rect(WIDTH - AVATAR_WIDTH, HEIGHT / 2 - AVATAR_HEIGHT / 2,
                                  AVATAR_WIDTH, AVATAR_HEIGHT)
         self.avatar = pygame.transform.scale(get_rand_img_not(av_id), (40, 40))
@@ -100,7 +95,7 @@ class Avatar:
                     dead.append(i)
             for i in range(len(dead)):
                 self.enemies.pop(dead[i] - i)
-            return 3 * len(dead)
+            return PTS_PER_KILL * len(dead)
         return 0
 
     def in_range(self, enemy):
@@ -135,8 +130,6 @@ class Avatar:
 
     def injured(self):
         self.health -= 1
-        # if self.health == 0:
-        #     pygame.quit()  # Need better way to end the game
         self.avatar = pygame.transform.scale(characters_injured[self.id], (40, 40))
 
     def is_dead(self):
