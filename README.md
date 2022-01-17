@@ -1,6 +1,6 @@
 # Crossroads January Resistance
 
-Happy Birthday to the January Crossroaders! This game is dedicated to Nicole, Alex P., Zoë, and Elaine. 
+Happy Birthday to the January-born Crossroaders! This game is dedicated to Nicole, Alex P., Zoë, and Elaine.
 
 ## Windows Install Instructions
 
